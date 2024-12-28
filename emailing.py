@@ -22,5 +22,5 @@ def send_email(image_obj):
     gmail.ehlo()
     gmail.starttls()
     gmail.login(SENDER, PASSWORD)
-    gmail.sendmail(RECEIVER, PASSWORD, email_message.as_string())
+    gmail.sendmail(SENDER, RECEIVER, email_message.as_string())
     gmail.quit()

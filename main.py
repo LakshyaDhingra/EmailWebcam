@@ -1,3 +1,4 @@
+# Don't stop program as soon as object leaves give it some time while it loads
 # Module for opening webcam
 import os
 import cv2
@@ -17,6 +18,7 @@ count = 1
 
 def clean_folder():
     images = glob.glob("images/*.png")
+    images.sort()
     for image in images:
         os.remove(image)
 
@@ -62,12 +64,10 @@ while True:
         # Instantiating the thread class for only sending email
         email_thread = Thread(target=send_email, args=(object_image, ))
         email_thread.daemon = True
-        clean_thread = Thread(target=clean_folder)
-        clean_thread.daemon = True
-
         email_thread.start()
+        email_thread.join(timeout=0.001)
 
-    cv2.imshow("My image", frame)
+    cv2.imshow("Customer image", frame)
 
     # converted to keyboard key
     key = cv2.waitKey(1)
@@ -76,6 +76,5 @@ while True:
         break
 
 video.release()
-
-# Done after program ends so that cleaning of images is not done while email is being sent
-clean_thread.start()
+# Kept at end of the program so images aren't cleared while sending email
+clean_folder()

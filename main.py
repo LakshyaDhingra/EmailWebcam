@@ -14,7 +14,6 @@ while True:
     # converted image to gray-frame
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     gray_frame_gau = cv2.GaussianBlur(gray_frame, (21, 21), 0)
-    cv2.imshow("My image", gray_frame_gau)
 
     # This variable will hold on to the first frame and not change with next iterations
     if first_frame is None:
